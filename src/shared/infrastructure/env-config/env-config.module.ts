@@ -1,11 +1,11 @@
-import { DynamicModule, Module } from '@nestjs/common';
-import { EnvConfigService } from './env-config.service';
+import { DynamicModule, Module } from '@nestjs/common'
+import { EnvConfigService } from './env-config.service'
 import {
   ConfigModule,
   ConfigModuleOptions,
   ConfigService,
-} from '@nestjs/config';
-import { join } from 'node:path';
+} from '@nestjs/config'
+import { join } from 'node:path'
 
 @Module({
   providers: [EnvConfigService, ConfigService],
@@ -25,6 +25,6 @@ export class EnvConfigModule {
           ],
         }),
       ],
-    };
+    }
   }
 }
