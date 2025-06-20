@@ -18,4 +18,12 @@ describe('EnvConfigService unit test', () => {
   it('should be defined', () => {
     expect(sut).toBeDefined()
   })
+
+  it('should return the variable PORT', () => {
+    expect(sut.getAppPort()).toBe(3000)
+  })
+
+  it('should return the variable NODE_ENV', () => {
+    expect(sut.getNodeEnv()).toBe('test')
+  })
 })
