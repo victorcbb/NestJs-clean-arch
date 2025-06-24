@@ -24,6 +24,12 @@ describe('UserEntity unit test', () => {
     expect(typeof sut.getName()).toBe('string')
   })
 
+  it('Getter of name field', () => {
+    expect(sut.getEmail()).toBeDefined()
+    expect(sut.getEmail()).toBe(props.email)
+    expect(typeof sut.getEmail()).toBe('string')
+  })
+
   it('Getter of password field', () => {
     // O ideal seria ter o password criptografado e ter um método para verificar se a senha informada é igual a senha do usuário
     expect(sut.getPassword()).toBeDefined()
