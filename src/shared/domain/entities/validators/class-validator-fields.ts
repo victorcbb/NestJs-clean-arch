@@ -7,8 +7,8 @@ import {
 export abstract class ClassValidatorFields<T>
   implements ValidatorFieldsInterface<T>
 {
-  errors: FieldsErrors = {}
-  validatedData!: T
+  errors: FieldsErrors = null
+  validatedData: T = null
 
   validate(data: T): boolean {
     if (typeof data !== 'object' || data === null) {
