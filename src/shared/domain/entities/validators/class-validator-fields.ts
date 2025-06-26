@@ -10,11 +10,7 @@ export abstract class ClassValidatorFields<T>
   errors: FieldsErrors = null
   validatedData: T = null
 
-  validate(data: T): boolean {
-    if (typeof data !== 'object' || data === null) {
-      throw new Error('Validation requires a valid class instance')
-    }
-
+  validate(data: any): boolean {
     const errors: ValidationError[] = validateSync(data)
 
     if (errors.length) {
@@ -25,11 +21,9 @@ export abstract class ClassValidatorFields<T>
           error.constraints as { [type: string]: string },
         )
       }
-
-      return false
     } else {
       this.validatedData = data
-      return true
     }
+    return !errors.length
   }
 }
