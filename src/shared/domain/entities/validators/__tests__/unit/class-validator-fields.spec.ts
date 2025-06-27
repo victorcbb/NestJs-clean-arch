@@ -6,9 +6,13 @@ class StubClassValidatorFields extends ClassValidatorFields<{
 }> {}
 
 describe('ClassValidatorFields unit tests', () => {
-  it('Should initialize errors and validatedData variables with null', () => {
-    const sut = new StubClassValidatorFields()
+  let sut: StubClassValidatorFields
 
+  beforeEach(() => {
+    sut = new StubClassValidatorFields()
+  })
+
+  it('Should initialize errors and validatedData variables with null', () => {
     expect(sut.errors).toBeNull()
     expect(sut.validatedData).toBeNull()
   })
@@ -19,8 +23,6 @@ describe('ClassValidatorFields unit tests', () => {
       { property: 'field', constraints: { isRequired: 'test error' } },
     ])
 
-    const sut = new StubClassValidatorFields()
-
     expect(sut.validate(null)).toBeFalsy()
     expect(spyValidateSync).toHaveBeenCalled()
     expect(sut.validatedData).toBeNull()
@@ -30,8 +32,6 @@ describe('ClassValidatorFields unit tests', () => {
   it('Should validate without errors', () => {
     const spyValidateSync = jest.spyOn(libClassValidator, 'validateSync')
     spyValidateSync.mockReturnValue([])
-
-    const sut = new StubClassValidatorFields()
 
     expect(sut.validate({ field: 'value' })).toBeTruthy()
     expect(spyValidateSync).toHaveBeenCalled()
