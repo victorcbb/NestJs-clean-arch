@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto'
 
 type EntityJSON<T> = { id: string } & T
 
-export abstract class Entity<Props> {
+export abstract class Entity<Props = any> {
   private readonly _id: string
   protected readonly props: Props
 
