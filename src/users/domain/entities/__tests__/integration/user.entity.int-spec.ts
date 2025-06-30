@@ -21,6 +21,13 @@ describe('UserEntity integration tests', () => {
 
       props = {
         ...UserDataBuilder({}),
+        name: 1 as any,
+      }
+
+      expect(() => new UserEntity(props)).toThrow(EntityValidationError)
+
+      props = {
+        ...UserDataBuilder({}),
         name: 'a'.repeat(256),
       }
 
