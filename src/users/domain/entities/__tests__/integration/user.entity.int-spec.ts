@@ -161,9 +161,27 @@ describe('UserEntity integration tests', () => {
       )
     })
 
-    it('Should a valid user', () => {
+    it('Should update a user using a valid name', () => {
       expect.assertions(0)
       userEntity.updateName('Valid Name')
+    })
+
+    it('Should a invalid user using password field', () => {
+      expect(() => userEntity.updatePassword(null)).toThrow(
+        EntityValidationError,
+      )
+      expect(() => userEntity.updatePassword('')).toThrow(EntityValidationError)
+      expect(() => userEntity.updatePassword(1 as any)).toThrow(
+        EntityValidationError,
+      )
+      expect(() => userEntity.updatePassword('a'.repeat(101))).toThrow(
+        EntityValidationError,
+      )
+    })
+
+    it('Should update a user using a valid password', () => {
+      expect.assertions(0)
+      userEntity.updatePassword('1234567890')
     })
   })
 })
