@@ -111,5 +111,59 @@ describe('UserEntity integration tests', () => {
 
       new UserEntity(props)
     })
+
+    it('Should throw an error when creating a user with invalid name', () => {
+      let props: UserProps = {
+        ...UserDataBuilder({}),
+        name: null,
+      }
+
+      expect(() => new UserEntity(props)).toThrow(EntityValidationError)
+
+      props = {
+        ...UserDataBuilder({}),
+        name: '',
+      }
+
+      expect(() => new UserEntity(props)).toThrow(EntityValidationError)
+
+      props = {
+        ...UserDataBuilder({}),
+        name: 1 as any,
+      }
+
+      expect(() => new UserEntity(props)).toThrow(EntityValidationError)
+
+      props = {
+        ...UserDataBuilder({}),
+        name: 'a'.repeat(256),
+      }
+
+      expect(() => new UserEntity(props)).toThrow(EntityValidationError)
+    })
+  })
+
+  describe('Update method', () => {
+    let userEntity: UserEntity
+
+    beforeEach(() => {
+      userEntity = new UserEntity(UserDataBuilder({}))
+    })
+
+    it('Should throw an error when update a user with invalid name', () => {
+      expect(() => userEntity.updateName(null)).toThrow(EntityValidationError)
+      expect(() => userEntity.updateName('')).toThrow(EntityValidationError)
+      expect(() => userEntity.updateName(1 as any)).toThrow(
+        EntityValidationError,
+      )
+      expect(() => userEntity.updateName('a'.repeat(256))).toThrow(
+        EntityValidationError,
+      )
+    })
+
+    it('Should a valid user', () => {
+      expect.assertions(0)
+      userEntity.updateName('Valid Name')
+    })
   })
 })
