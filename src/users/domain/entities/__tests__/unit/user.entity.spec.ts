@@ -4,14 +4,17 @@ import { UserEntity, UserProps } from '../../user.entity'
 describe('UserEntity unit test', () => {
   let props: UserProps
   let sut: UserEntity
+  let validator: jest.Mock
 
   beforeEach(() => {
+    validator = UserEntity.validate = jest.fn()
     props = UserDataBuilder({})
 
     sut = new UserEntity(props)
   })
 
   it('Constructor method', () => {
+    expect(validator).toHaveBeenCalled()
     expect(sut.name).toBe(props.name)
     expect(sut.email).toBe(props.email)
     expect(sut.password).toBe(props.password)
@@ -70,6 +73,7 @@ describe('UserEntity unit test', () => {
     const updatedName = 'Updated Name'
     sut.updateName(updatedName)
 
+    expect(validator).toHaveBeenCalled()
     expect(sut.name).toBe(updatedName)
   })
 
@@ -77,6 +81,7 @@ describe('UserEntity unit test', () => {
     const updatedPassword = 'Updated password'
     sut.updatePassword(updatedPassword)
 
+    expect(validator).toHaveBeenCalled()
     expect(sut.password).toBe(updatedPassword)
   })
 })
