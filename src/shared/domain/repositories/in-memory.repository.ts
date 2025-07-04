@@ -26,7 +26,9 @@ export abstract class InMemoryRepository<E extends Entity>
 
   async delete(id: string): Promise<void> {
     const index = await this._getIndex(id)
-    this.item.splice(index, 1)
+    if (index >= 0) {
+      this.item.splice(index, 1)
+    }
   }
 
   async _get(id: string): Promise<E | null> {
