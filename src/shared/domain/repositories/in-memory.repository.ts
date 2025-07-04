@@ -1,8 +1,8 @@
 import { Entity } from '../entities/entity'
-import { RepositooryInterface } from './repository-contract'
+import { RepositoryInterface } from './repository-contract'
 
 export abstract class InMemoryRepository<E extends Entity>
-  implements RepositooryInterface<E>
+  implements RepositoryInterface<E>
 {
   item: E[] = []
 
