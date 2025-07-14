@@ -135,6 +135,10 @@ describe('Searchable Repository unit tests', () => {
         { input: { key: 'value' }, output: { key: 'value' } },
         { input: { key: 14 }, output: { key: 14 } },
         { input: { key: true }, output: { key: true } },
+        {
+          input: { key: 'value', key2: 10, key3: true },
+          output: { key: 'value', key2: 10, key3: true },
+        },
       ]
 
       params.forEach(param => {
