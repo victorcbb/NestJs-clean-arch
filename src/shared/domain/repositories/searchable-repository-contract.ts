@@ -2,7 +2,7 @@ import { Entity } from '../entities/entity'
 import { RepositoryInterface } from './repository-contract'
 
 export type SortDirection = 'asc' | 'desc'
-export type SearchProps<Filter = string> = {
+export type SearchProps<Filter = { [key: string]: any }> = {
   page?: number
   perPage?: number
   sort?: string | null
@@ -10,14 +10,14 @@ export type SearchProps<Filter = string> = {
   filter?: Filter | null
 }
 
-export class searchParams {
+export class SearchParams<Filter = { [key: string]: any }> {
   protected _page = 1
   protected _perPage = 15
   protected _sort: string | null
   protected _sortDirection: SortDirection | null
-  protected _filter: string | null
+  protected _filter: Filter | null
 
-  constructor(props: SearchProps = {}) {
+  constructor(props: SearchProps<Filter> = {}) {
     this.page = props.page
     this.perPage = props.perPage
     this.sort = props.sort ?? null
@@ -86,15 +86,18 @@ export class searchParams {
     this._sortDirection = dir === 'asc' || dir === 'desc' ? dir : 'desc'
   }
 
-  get filter(): string | null {
+  get filter(): Filter | null {
     return this._filter
   }
 
-  private set filter(value: string | null) {
+  private set filter(value: Filter | null) {
     this._filter =
-      value === null || value === undefined || value === ''
+      value === null ||
+      value === undefined ||
+      typeof value !== 'object' ||
+      (typeof value === 'object' && Object.keys(value).length === 0)
         ? null
-        : `${value}`.trim()
+        : value
   }
 }
 
