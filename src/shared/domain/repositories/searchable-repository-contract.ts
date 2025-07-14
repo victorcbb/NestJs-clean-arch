@@ -9,6 +9,15 @@ export type SearchProps<Filter = { [key: string]: any }> = {
   sortDirection?: SortDirection | null
   filter?: Filter | null
 }
+export type SearchResultProps<E extends Entity, Filter> = {
+  items: E[]
+  total: number
+  currentPage: number
+  perPage: number
+  sort: string | null
+  sortDirection: SortDirection | null
+  filter: Filter | null
+}
 
 export class SearchParams<Filter = { [key: string]: any }> {
   protected _page = 1
@@ -98,6 +107,41 @@ export class SearchParams<Filter = { [key: string]: any }> {
       (typeof value === 'object' && Object.keys(value).length === 0)
         ? null
         : value
+  }
+}
+
+export class SearchResult<E extends Entity, Filter = { [key: string]: any }> {
+  readonly items: E[]
+  readonly total: number
+  readonly currentPage: number
+  readonly perPage: number
+  readonly lastPage: number
+  readonly sort: string | null
+  readonly sortDirection: SortDirection | null
+  readonly filter: Filter | null
+
+  constructor(props: SearchResultProps<E, Filter>) {
+    this.items = props.items
+    this.total = props.total
+    this.currentPage = props.currentPage
+    this.perPage = props.perPage
+    this.lastPage = Math.ceil(this.total / this.perPage)
+    this.sort = props.sort ?? null
+    this.sortDirection = props.sortDirection ?? null
+    this.filter = props.filter ?? null
+  }
+
+  toJSON(forceEntity = false) {
+    return {
+      items: forceEntity ? this.items.map(item => item.toJSON()) : this.items,
+      total: this.total,
+      currentPage: this.currentPage,
+      perPage: this.perPage,
+      lastPage: this.lastPage,
+      sort: this.sort,
+      sortDirection: this.sortDirection,
+      filter: this.filter,
+    }
   }
 }
 
