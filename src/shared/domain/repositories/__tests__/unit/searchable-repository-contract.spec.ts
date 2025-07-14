@@ -129,16 +129,17 @@ describe('Searchable Repository unit tests', () => {
         { input: null, output: null },
         { input: undefined, output: null },
         { input: '', output: null },
-        { input: 'Test', output: 'Test' },
-        { input: 20, output: '20' },
-        { input: true, output: 'true' },
-        { input: false, output: 'false' },
-        { input: {}, output: '[object Object]' },
+        { input: 'Test', output: null },
+        { input: 20, output: null },
+        { input: {}, output: null },
+        { input: { key: 'value' }, output: { key: 'value' } },
+        { input: { key: 14 }, output: { key: 14 } },
+        { input: { key: true }, output: { key: true } },
       ]
 
       params.forEach(param => {
-        const sut = new searchParams({ filter: param.input as any })
-        expect(sut.filter).toBe(param.output)
+        const sut = new SearchParams({ filter: param.input as any })
+        expect(sut.filter).toEqual(param.output)
       })
     })
   })
