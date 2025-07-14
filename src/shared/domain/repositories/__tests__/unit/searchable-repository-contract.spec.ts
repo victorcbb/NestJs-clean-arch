@@ -1,9 +1,9 @@
-import { searchParams } from '../../searchable-repository-contract'
+import { SearchParams } from '../../searchable-repository-contract'
 
 describe('Searchable Repository unit tests', () => {
   describe('SearchParams tests', () => {
     it('Should test page prop', () => {
-      const sut = new searchParams()
+      const sut = new SearchParams()
       expect(sut.page).toBe(1)
 
       const params = [
@@ -26,13 +26,13 @@ describe('Searchable Repository unit tests', () => {
       ]
 
       params.forEach(param => {
-        const sut = new searchParams({ page: param.input as any })
+        const sut = new SearchParams({ page: param.input as any })
         expect(sut.page).toBe(param.output)
       })
     })
 
     it('Should test perPage prop', () => {
-      const sut = new searchParams()
+      const sut = new SearchParams()
       expect(sut.perPage).toBe(15)
 
       const params = [
@@ -55,13 +55,13 @@ describe('Searchable Repository unit tests', () => {
       ]
 
       params.forEach(param => {
-        const sut = new searchParams({ perPage: param.input as any })
+        const sut = new SearchParams({ perPage: param.input as any })
         expect(sut.perPage).toBe(param.output)
       })
     })
 
     it('Should test sort prop', () => {
-      const sut = new searchParams()
+      const sut = new SearchParams()
       expect(sut.sort).toBeNull()
 
       const params = [
@@ -76,22 +76,22 @@ describe('Searchable Repository unit tests', () => {
       ]
 
       params.forEach(param => {
-        const sut = new searchParams({ sort: param.input as any })
+        const sut = new SearchParams({ sort: param.input as any })
         expect(sut.sort).toBe(param.output)
       })
     })
 
     it('Should test sortDirection prop', () => {
-      let sut = new searchParams()
+      let sut = new SearchParams()
       expect(sut.sortDirection).toBeNull()
 
-      sut = new searchParams({ sort: null, sortDirection: 'asc' })
+      sut = new SearchParams({ sort: null, sortDirection: 'asc' })
       expect(sut.sortDirection).toBeNull()
 
-      sut = new searchParams({ sort: undefined, sortDirection: 'asc' })
+      sut = new SearchParams({ sort: undefined, sortDirection: 'asc' })
       expect(sut.sortDirection).toBeNull()
 
-      sut = new searchParams({ sort: '', sortDirection: 'asc' })
+      sut = new SearchParams({ sort: '', sortDirection: 'asc' })
       expect(sut.sortDirection).toBeNull()
 
       const params = [
@@ -113,7 +113,7 @@ describe('Searchable Repository unit tests', () => {
       ]
 
       params.forEach(param => {
-        const sut = new searchParams({
+        const sut = new SearchParams({
           sort: 'field',
           sortDirection: param.input as any,
         })
@@ -122,7 +122,7 @@ describe('Searchable Repository unit tests', () => {
     })
 
     it('Should test filter prop', () => {
-      const sut = new searchParams()
+      const sut = new SearchParams()
       expect(sut.filter).toBeNull()
 
       const params = [
