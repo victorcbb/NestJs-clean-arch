@@ -1,4 +1,7 @@
-import { SearchParams } from '../../searchable-repository-contract'
+import {
+  SearchParams,
+  SearchResult,
+} from '../../searchable-repository-contract'
 
 describe('Searchable Repository unit tests', () => {
   describe('SearchParams tests', () => {
@@ -145,6 +148,72 @@ describe('Searchable Repository unit tests', () => {
         const sut = new SearchParams({ filter: param.input as any })
         expect(sut.filter).toEqual(param.output)
       })
+    })
+  })
+
+  describe('SearchResult tests', () => {
+    it('constructor props', () => {
+      let sut = new SearchResult({
+        items: ['entity1', 'entity2', 'entity3', 'entity4'] as any,
+        currentPage: 1,
+        perPage: 2,
+        total: 4,
+        sort: null,
+        sortDirection: null,
+        filter: null,
+      })
+      expect(sut.toJSON()).toStrictEqual({
+        items: ['entity1', 'entity2', 'entity3', 'entity4'],
+        currentPage: 1,
+        perPage: 2,
+        total: 4,
+        lastPage: 2,
+        sort: null,
+        sortDirection: null,
+        filter: null,
+      })
+
+      sut = new SearchResult({
+        items: ['entity1', 'entity2', 'entity3', 'entity4'] as any,
+        currentPage: 1,
+        perPage: 2,
+        total: 4,
+        sort: 'name',
+        sortDirection: 'asc',
+        filter: { key: 'test' },
+      })
+      expect(sut.toJSON()).toStrictEqual({
+        items: ['entity1', 'entity2', 'entity3', 'entity4'],
+        currentPage: 1,
+        perPage: 2,
+        total: 4,
+        lastPage: 2,
+        sort: 'name',
+        sortDirection: 'asc',
+        filter: { key: 'test' },
+      })
+
+      sut = new SearchResult({
+        items: ['entity1', 'entity2', 'entity3', 'entity4'] as any,
+        currentPage: 1,
+        perPage: 10,
+        total: 4,
+        sort: 'name',
+        sortDirection: 'asc',
+        filter: { key: 'test' },
+      })
+      expect(sut.lastPage).toBe(1)
+
+      sut = new SearchResult({
+        items: ['entity1', 'entity2', 'entity3', 'entity4'] as any,
+        currentPage: 1,
+        perPage: 10,
+        total: 54,
+        sort: 'name',
+        sortDirection: 'asc',
+        filter: { key: 'test' },
+      })
+      expect(sut.lastPage).toBe(6)
     })
   })
 })
