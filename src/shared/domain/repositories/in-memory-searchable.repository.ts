@@ -53,14 +53,27 @@ export abstract class InMemorySearchableRepository<E extends Entity>
     }
 
     return [...items].sort((a, b) => {
-      if (a.toJSON()[sort] < b.toJSON()[sort]) {
+      const aValue = a.toJSON()[sort]
+      const bValue = b.toJSON()[sort]
+
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        const aLower = aValue.toLowerCase()
+        const bLower = bValue.toLowerCase()
+        if (aLower < bLower) {
+          return sortDirection === 'asc' ? -1 : 1
+        }
+        if (aLower > bLower) {
+          return sortDirection === 'asc' ? 1 : -1
+        }
+        return 0
+      }
+
+      if (aValue < bValue) {
         return sortDirection === 'asc' ? -1 : 1
       }
-
-      if (a.toJSON()[sort] > b.toJSON()[sort]) {
+      if (aValue > bValue) {
         return sortDirection === 'asc' ? 1 : -1
       }
-
       return 0
     })
   }
