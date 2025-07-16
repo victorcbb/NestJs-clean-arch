@@ -120,7 +120,42 @@ describe('InMemorySearchableRepository Unit Tests', () => {
       expect(spyFilterMethod).toHaveBeenCalledTimes(7)
     })
   })
-  describe('applySort method', () => {})
+  describe('applySort method', () => {
+    it('should not sort items by name when wrong param', async () => {
+      const items = [
+        new StubEntity({ name: 'B', price: 5 }),
+        new StubEntity({ name: 'a', price: 1 }),
+      ]
+
+      let itemsSorted = await sut['applySort'](items, null, null)
+
+      expect(itemsSorted).toStrictEqual(items)
+
+      itemsSorted = await sut['applySort'](items, 'wrong', 'desc')
+
+      expect(itemsSorted).toStrictEqual(items)
+
+      itemsSorted = await sut['applySort'](items, 'price', 'desc')
+
+      expect(itemsSorted).toStrictEqual(items)
+    })
+
+    it('should sort items by name', async () => {
+      const items = [
+        new StubEntity({ name: 'B', price: 5 }),
+        new StubEntity({ name: 'a', price: 1 }),
+        new StubEntity({ name: 'c', price: 10 }),
+      ]
+
+      let itemsSorted = await sut['applySort'](items, 'name', 'asc')
+
+      expect(itemsSorted).toStrictEqual([items[1], items[0], items[2]])
+
+      itemsSorted = await sut['applySort'](items, 'name', 'desc')
+
+      expect(itemsSorted).toStrictEqual([items[2], items[0], items[1]])
+    })
+  })
   describe('applyPaginate method', () => {})
   describe('search method', () => {})
 })
