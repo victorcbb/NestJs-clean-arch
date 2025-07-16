@@ -4,10 +4,10 @@ import { RepositoryInterface } from './repository-contract'
 export abstract class InMemoryRepository<E extends Entity>
   implements RepositoryInterface<E>
 {
-  item: E[] = []
+  items: E[] = []
 
   async insert(entity: E): Promise<void> {
-    this.item.push(entity)
+    this.items.push(entity)
   }
 
   async findById(id: string) {
@@ -15,25 +15,25 @@ export abstract class InMemoryRepository<E extends Entity>
   }
 
   async findAll(): Promise<E[]> {
-    return this.item
+    return this.items
   }
 
   async update(entity: E): Promise<void> {
     const index = await this._getIndex(entity.id)
 
-    this.item[index] = entity
+    this.items[index] = entity
   }
 
   async delete(id: string): Promise<void> {
     const index = await this._getIndex(id)
     if (index >= 0) {
-      this.item.splice(index, 1)
+      this.items.splice(index, 1)
     }
   }
 
   async _get(id: string): Promise<E | null> {
     const _id = `${id}`
-    const entity = this.item.find(item => item.id === _id)
+    const entity = this.items.find(item => item.id === _id)
 
     if (!entity) {
       return null
@@ -44,7 +44,7 @@ export abstract class InMemoryRepository<E extends Entity>
 
   async _getIndex(id: string): Promise<number> {
     const _id = `${id}`
-    const index = this.item.findIndex(item => item.id === _id)
+    const index = this.items.findIndex(item => item.id === _id)
 
     return index
   }
