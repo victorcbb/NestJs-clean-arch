@@ -22,7 +22,7 @@ describe('InMemoryRepository Unit Tests', () => {
 
     await sut.insert(entity)
 
-    expect(entity.toJSON()).toStrictEqual(sut.item[0].toJSON())
+    expect(entity.toJSON()).toStrictEqual(sut.items[0].toJSON())
   })
 
   it('Should return null when entity not found', async () => {
@@ -64,7 +64,7 @@ describe('InMemoryRepository Unit Tests', () => {
 
     await sut.update(updatedEntity)
 
-    expect(sut.item[0].toJSON()).not.toStrictEqual(updatedEntity.toJSON())
+    expect(sut.items[0].toJSON()).not.toStrictEqual(updatedEntity.toJSON())
   })
 
   it('Should update an entity', async () => {
@@ -78,7 +78,7 @@ describe('InMemoryRepository Unit Tests', () => {
 
     await sut.update(updatedEntity)
 
-    expect(sut.item[0].toJSON()).toStrictEqual(updatedEntity.toJSON())
+    expect(sut.items[0].toJSON()).toStrictEqual(updatedEntity.toJSON())
   })
 
   it('Should fail on delete when entity not found', async () => {
@@ -88,7 +88,7 @@ describe('InMemoryRepository Unit Tests', () => {
 
     await sut.delete('non-existing-id')
 
-    expect(sut.item).toHaveLength(1)
+    expect(sut.items).toHaveLength(1)
   })
 
   it('Should delete an entity', async () => {
@@ -98,6 +98,6 @@ describe('InMemoryRepository Unit Tests', () => {
 
     await sut.delete(entity.id)
 
-    expect(sut.item).toHaveLength(0)
+    expect(sut.items).toHaveLength(0)
   })
 })
