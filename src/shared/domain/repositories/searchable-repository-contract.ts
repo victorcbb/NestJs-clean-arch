@@ -148,7 +148,7 @@ export class SearchResult<E extends Entity, Filter = { [key: string]: any }> {
 export interface SearchableRepositoryInterface<
   E extends Entity,
   Filter = { [key: string]: any },
-  SearchInput = SearchParams,
+  SearchInput = SearchParams<Filter>,
   SearchOutput = SearchResult<E, Filter>,
 > extends RepositoryInterface<E> {
   sortableFields: string[]
