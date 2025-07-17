@@ -5,7 +5,7 @@ import {
   SearchableRepositoryInterface,
 } from '@/shared/domain/repositories/searchable-repository-contract'
 
-export type UserFilter = { name: string; email: string }
+export type UserFilter = { name?: string; email?: string }
 
 export class SearchParams extends DefaultSearchParams<UserFilter> {}
 export class SearchResult extends DefaultSearchResult<UserEntity, UserFilter> {}
