@@ -4,6 +4,7 @@ import { UserEntity } from '@/users/domain/entities/user.entity'
 
 import { ConflictError } from '../errors/conflict-error'
 import { HashProvider } from '@/shared/application/providers/hash-provider'
+import { UserOutput } from '../dto/user-output'
 
 export type SignUpInput = {
   name: string
@@ -11,12 +12,7 @@ export type SignUpInput = {
   password: string
 }
 
-export type SignUpOutput = {
-  id: string
-  name: string
-  email: string
-  createdAt: Date
-}
+export type SignUpOutput = UserOutput
 
 export class SignUpUseCase {
   constructor(

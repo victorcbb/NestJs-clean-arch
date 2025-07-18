@@ -1,16 +1,12 @@
 import { UserRepositoory } from '@/users/domain/repositories/user.repository'
 import { NotFoundError } from '../errors/not-found-error'
+import { UserOutput } from '../dto/user-output'
 
 export type GetUserInput = {
   id: string
 }
 
-export type GetUserOutput = {
-  id: string
-  name: string
-  email: string
-  createdAt: Date
-}
+export type GetUserOutput = UserOutput
 
 export class GetUserUseCase {
   constructor(private userRepository: UserRepositoory) {}
