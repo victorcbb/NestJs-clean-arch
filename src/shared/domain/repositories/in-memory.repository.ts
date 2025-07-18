@@ -10,7 +10,7 @@ export abstract class InMemoryRepository<E extends Entity>
     this.items.push(entity)
   }
 
-  async findById(id: string) {
+  async findById(id: string): Promise<E | null> {
     return this._get(id)
   }
 
