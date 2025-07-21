@@ -5,7 +5,7 @@ import { UserInMemoryRepository } from '@/users/infrastructure/database/in-memor
 import { BcryptJsHashProvider } from '@/users/infrastructure/providers/hash-provider/bcryptjs-hash.provider'
 import { UserDataBuilder } from '@/users/domain/testing/helpers/user-data-builder'
 import { ConflictError } from '@/users/application/errors/conflict-error'
-import { BadRequestError } from '@/users/application/errors/bad-request-error'
+import { BadRequestError } from '@/shared/application/errors/bad-request-error'
 
 describe('SignUpUseCase unit test', () => {
   let sut: SignUpUseCase

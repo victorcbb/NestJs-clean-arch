@@ -1,5 +1,5 @@
 import { UserRepositoory } from '@/users/domain/repositories/user.repository'
-import { NotFoundError } from '../errors/not-found-error'
+import { NotFoundError } from '../../../shared/application/errors/not-found-error'
 import { UserOutput } from '../dto/user-output'
 import { UseCase } from '@/shared/application/usecases/use-case'
 
