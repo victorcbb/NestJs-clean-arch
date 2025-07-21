@@ -5,6 +5,7 @@ import { UserEntity } from '@/users/domain/entities/user.entity'
 import { ConflictError } from '../errors/conflict-error'
 import { HashProvider } from '@/shared/application/providers/hash-provider'
 import { UserOutput } from '../dto/user-output'
+import { UseCase } from '@/shared/application/usecases/use-case'
 
 export type SignUpInput = {
   name: string
@@ -14,7 +15,7 @@ export type SignUpInput = {
 
 export type SignUpOutput = UserOutput
 
-export class SignUpUseCase {
+export class SignUpUseCase implements UseCase<SignUpInput, SignUpOutput> {
   constructor(
     private userRepository: UserRepositoory,
     private hashProvider: HashProvider,

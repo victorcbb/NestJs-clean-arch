@@ -1,6 +1,7 @@
 import { UserRepositoory } from '@/users/domain/repositories/user.repository'
 import { NotFoundError } from '../errors/not-found-error'
 import { UserOutput } from '../dto/user-output'
+import { UseCase } from '@/shared/application/usecases/use-case'
 
 export type GetUserInput = {
   id: string
@@ -8,7 +9,7 @@ export type GetUserInput = {
 
 export type GetUserOutput = UserOutput
 
-export class GetUserUseCase {
+export class GetUserUseCase implements UseCase<GetUserInput, GetUserOutput> {
   constructor(private userRepository: UserRepositoory) {}
 
   async execute(input: GetUserInput): Promise<GetUserOutput> {
