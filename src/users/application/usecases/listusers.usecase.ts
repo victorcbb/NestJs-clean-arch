@@ -18,7 +18,7 @@ export type ListUsersInput = SearchInput<{
 
 export type ListUsersOutput = PaginationOutput<UserOutput>
 
-export class ListUserUseCase
+export class ListUsersUseCase
   implements UseCase<ListUsersInput, ListUsersOutput>
 {
   constructor(private userRepository: UserRepositoory) {}
