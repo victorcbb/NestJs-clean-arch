@@ -6,7 +6,7 @@ import { BadRequestError } from '@/shared/application/errors/bad-request-error'
 
 export type UpdateUserInput = {
   id: string
-  name?: string
+  name: string
 }
 
 export type UpdateUserOutput = UserOutput
