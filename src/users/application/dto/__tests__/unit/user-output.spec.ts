@@ -10,6 +10,11 @@ describe('UserOutputMapper Unit Tests', () => {
     const sut = UserOutputMapper.toOutput(entity)
 
     expect(spyToJSON).toHaveBeenCalled()
-    expect(sut).toStrictEqual(entity.toJSON())
+    expect(sut).toStrictEqual({
+      id: entity.id,
+      name: entity.name,
+      email: entity.email,
+      createdAt: entity.createdAt,
+    })
   })
 })
