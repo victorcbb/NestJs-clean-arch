@@ -52,7 +52,14 @@ describe('ListUsersUseCase Unit Tests', () => {
     output = sut['toOutput'](result)
 
     expect(output).toStrictEqual({
-      items: [user.toJSON()],
+      items: [
+        {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          createdAt: user.createdAt,
+        },
+      ],
       total: 1,
       currentPage: 1,
       lastPage: 1,
@@ -74,7 +81,14 @@ describe('ListUsersUseCase Unit Tests', () => {
     const output = await sut.execute({})
 
     expect(output).toStrictEqual({
-      items: [...items].reverse().map(item => item.toJSON()),
+      items: [...items].reverse().map(item => {
+        return {
+          id: item.id,
+          name: item.name,
+          email: item.email,
+          createdAt: item.createdAt,
+        }
+      }),
       total: 2,
       currentPage: 1,
       lastPage: 1,
@@ -102,7 +116,20 @@ describe('ListUsersUseCase Unit Tests', () => {
     })
 
     expect(output).toStrictEqual({
-      items: [items[1].toJSON(), items[2].toJSON()],
+      items: [
+        {
+          id: items[1].id,
+          name: items[1].name,
+          email: items[1].email,
+          createdAt: items[1].createdAt,
+        },
+        {
+          id: items[2].id,
+          name: items[2].name,
+          email: items[2].email,
+          createdAt: items[2].createdAt,
+        },
+      ],
       total: 3,
       currentPage: 1,
       lastPage: 2,
@@ -118,7 +145,14 @@ describe('ListUsersUseCase Unit Tests', () => {
     })
 
     expect(output).toStrictEqual({
-      items: [items[0].toJSON()],
+      items: [
+        {
+          id: items[0].id,
+          name: items[0].name,
+          email: items[0].email,
+          createdAt: items[0].createdAt,
+        },
+      ],
       total: 3,
       currentPage: 2,
       lastPage: 2,
@@ -134,7 +168,26 @@ describe('ListUsersUseCase Unit Tests', () => {
     })
 
     expect(output).toStrictEqual({
-      items: [items[1].toJSON(), items[2].toJSON(), items[0].toJSON()],
+      items: [
+        {
+          id: items[1].id,
+          name: items[1].name,
+          email: items[1].email,
+          createdAt: items[1].createdAt,
+        },
+        {
+          id: items[2].id,
+          name: items[2].name,
+          email: items[2].email,
+          createdAt: items[2].createdAt,
+        },
+        {
+          id: items[0].id,
+          name: items[0].name,
+          email: items[0].email,
+          createdAt: items[0].createdAt,
+        },
+      ],
       total: 3,
       currentPage: 1,
       lastPage: 1,
