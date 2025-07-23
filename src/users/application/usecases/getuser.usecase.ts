@@ -1,6 +1,6 @@
 import { UserRepositoory } from '@/users/domain/repositories/user.repository'
 import { NotFoundError } from '../../../shared/application/errors/not-found-error'
-import { UserOutput } from '../dto/user-output'
+import { UserOutput, UserOutputMapper } from '../dto/user-output'
 import { UseCase } from '@/shared/application/usecases/use-case'
 
 export type GetUserInput = {
@@ -19,11 +19,6 @@ export class GetUserUseCase implements UseCase<GetUserInput, GetUserOutput> {
       throw new NotFoundError('User not found')
     }
 
-    return {
-      id: user.toJSON().id,
-      name: user.toJSON().name,
-      email: user.toJSON().email,
-      createdAt: user.toJSON().createdAt,
-    }
+    return UserOutputMapper.toOutput(user)
   }
 }
