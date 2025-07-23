@@ -4,7 +4,7 @@ import { UserEntity } from '@/users/domain/entities/user.entity'
 
 import { ConflictError } from '../errors/conflict-error'
 import { HashProvider } from '@/shared/application/providers/hash-provider'
-import { UserOutput } from '../dto/user-output'
+import { UserOutput, UserOutputMapper } from '../dto/user-output'
 import { UseCase } from '@/shared/application/usecases/use-case'
 
 export type SignUpInput = {
@@ -42,11 +42,6 @@ export class SignUpUseCase implements UseCase<SignUpInput, SignUpOutput> {
 
     await this.userRepository.insert(user)
 
-    return {
-      id: user.toJSON().id,
-      name: user.toJSON().name,
-      email: user.toJSON().email,
-      createdAt: user.toJSON().createdAt,
-    }
+    return UserOutputMapper.toOutput(user)
   }
 }
