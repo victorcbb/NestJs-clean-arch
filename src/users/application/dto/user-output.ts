@@ -9,6 +9,11 @@ export type UserOutput = {
 
 export class UserOutputMapper {
   static toOutput(entity: UserEntity): UserOutput {
-    return entity.toJSON()
+    return {
+      id: entity.toJSON().id,
+      name: entity.toJSON().name,
+      email: entity.toJSON().email,
+      createdAt: entity.toJSON().createdAt,
+    }
   }
 }
