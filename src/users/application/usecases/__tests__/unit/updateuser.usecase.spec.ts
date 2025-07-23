@@ -16,11 +16,8 @@ describe('UpdateUserUseCase unit test', () => {
   })
 
   it('should throw error when name not provided', async () => {
-    const item = new UserEntity(UserDataBuilder({}))
-    await userRepository.insert(item)
-
     await expect(async () => {
-      await sut.execute({ id: item.id, name: '' })
+      await sut.execute({ id: 'id', name: '' })
     }).rejects.toBeInstanceOf(BadRequestError)
   })
 
