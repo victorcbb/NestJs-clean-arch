@@ -28,50 +28,50 @@ import { UpdatePasswordDto } from './dtos/update-password.dto'
 @Controller('users')
 export class UsersController {
   @Inject(SignUpUseCase)
-  private signUpUsecase: SignUpUseCase
+  private signUpUseCase: SignUpUseCase
 
   @Inject(SignInUseCase)
-  private signInUsecase: SignInUseCase
+  private signInUseCase: SignInUseCase
 
   @Inject(ListUsersUseCase)
-  private listUsersUsecase: ListUsersUseCase
+  private listUsersUseCase: ListUsersUseCase
 
   @Inject(GetUserUseCase)
-  private getUserUsecase: GetUserUseCase
+  private getUserUseCase: GetUserUseCase
 
   @Inject(UpdateUserUseCase)
-  private updateUserUsecase: UpdateUserUseCase
+  private updateUserUseCase: UpdateUserUseCase
 
   @Inject(UpdatePasswordUseCase)
-  private updatePasswordUsecase: UpdatePasswordUseCase
+  private updatePasswordUseCase: UpdatePasswordUseCase
 
   @Inject(DeleteUserUseCase)
-  private deleteUserUsecase: DeleteUserUseCase
+  private deleteUserUseCase: DeleteUserUseCase
 
   @Post()
   async create(@Body() signUpDto: SignUpDto) {
-    return await this.signUpUsecase.execute(signUpDto)
+    return await this.signUpUseCase.execute(signUpDto)
   }
 
   @HttpCode(HttpStatus.OK) // 200
   @Post('/login')
   async login(@Body() signInDto: SignInDto) {
-    return await this.signInUsecase.execute(signInDto)
+    return await this.signInUseCase.execute(signInDto)
   }
 
   @Get()
   async search(@Query() searchParams: ListUsersDto) {
-    return await this.listUsersUsecase.execute(searchParams)
+    return await this.listUsersUseCase.execute(searchParams)
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return await this.getUserUsecase.execute({ id })
+    return await this.getUserUseCase.execute({ id })
   }
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return await this.updateUserUsecase.execute({ id, ...updateUserDto })
+    return await this.updateUserUseCase.execute({ id, ...updateUserDto })
   }
 
   @Patch(':id')
@@ -79,7 +79,7 @@ export class UsersController {
     @Param('id') id: string,
     @Body() updatePasswordDto: UpdatePasswordDto,
   ) {
-    return await this.updatePasswordUsecase.execute({
+    return await this.updatePasswordUseCase.execute({
       id,
       ...updatePasswordDto,
     })
@@ -88,6 +88,6 @@ export class UsersController {
   @HttpCode(HttpStatus.NO_CONTENT) // 204
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return await this.deleteUserUsecase.execute({ id })
+    return await this.deleteUserUseCase.execute({ id })
   }
 }
