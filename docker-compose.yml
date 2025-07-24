@@ -9,5 +9,6 @@ services:
     volumes:
       - ./docker/db:/var/lib/postgresql/data
     environment:
+      - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=projectdb
