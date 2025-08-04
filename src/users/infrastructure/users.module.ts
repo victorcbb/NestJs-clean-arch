@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common'
 import { UsersController } from './users.controller'
 import { SignUpUseCase } from '../application/usecases/signup.usecase'
-import { UserInMemoryRepository } from './database/in-memory/repositories/user-in-memory.repository'
 import { BcryptJsHashProvider } from './providers/hash-provider/bcryptjs-hash.provider'
-import { UserRepositoory } from '../domain/repositories/user.repository'
+import { UserRepository } from '../domain/repositories/user.repository'
 import { HashProvider } from '@/shared/application/providers/hash-provider'
 import { SignInUseCase } from '../application/usecases/signin.usecase'
 import { GetUserUseCase } from '../application/usecases/getuser.usecase'
@@ -11,13 +10,22 @@ import { ListUsersUseCase } from '../application/usecases/listusers.usecase'
 import { UpdateUserUseCase } from '../application/usecases/updateuser.usecase'
 import { UpdatePasswordUseCase } from '../application/usecases/updatepassword.usecase'
 import { DeleteUserUseCase } from '../application/usecases/deleteuser.usecase'
+import { PrismaService } from '@/shared/infrastructure/database/prisma/prisma.service'
+import { UserPrismaRepository } from './database/prisma/repositories/user-prisma.repositories'
 
 @Module({
   controllers: [UsersController],
   providers: [
     {
+      provide: 'PrismaService',
+      useClass: PrismaService, // Assuming PrismaService is defined in the shared module
+    },
+    {
       provide: 'UserRepository',
-      useClass: UserInMemoryRepository,
+      useFactory: (prismaService: PrismaService) => {
+        return new UserPrismaRepository(prismaService)
+      },
+      inject: ['PrismaService'],
     },
     {
       provide: 'HashProvider',
@@ -26,7 +34,7 @@ import { DeleteUserUseCase } from '../application/usecases/deleteuser.usecase'
     {
       provide: SignUpUseCase,
       useFactory: (
-        userRepository: UserRepositoory,
+        userRepository: UserRepository,
         hashProvider: HashProvider,
       ) => {
         return new SignUpUseCase(userRepository, hashProvider)
@@ -36,7 +44,7 @@ import { DeleteUserUseCase } from '../application/usecases/deleteuser.usecase'
     {
       provide: SignInUseCase,
       useFactory: (
-        userRepository: UserRepositoory,
+        userRepository: UserRepository,
         hashProvider: HashProvider,
       ) => {
         return new SignInUseCase(userRepository, hashProvider)
@@ -45,21 +53,21 @@ import { DeleteUserUseCase } from '../application/usecases/deleteuser.usecase'
     },
     {
       provide: GetUserUseCase,
-      useFactory: (userRepository: UserRepositoory) => {
+      useFactory: (userRepository: UserRepository) => {
         return new GetUserUseCase(userRepository)
       },
       inject: ['UserRepository'],
     },
     {
       provide: ListUsersUseCase,
-      useFactory: (userRepository: UserRepositoory) => {
+      useFactory: (userRepository: UserRepository) => {
         return new ListUsersUseCase(userRepository)
       },
       inject: ['UserRepository'],
     },
     {
       provide: UpdateUserUseCase,
-      useFactory: (userRepository: UserRepositoory) => {
+      useFactory: (userRepository: UserRepository) => {
         return new UpdateUserUseCase(userRepository)
       },
       inject: ['UserRepository'],
@@ -67,7 +75,7 @@ import { DeleteUserUseCase } from '../application/usecases/deleteuser.usecase'
     {
       provide: UpdatePasswordUseCase,
       useFactory: (
-        userRepository: UserRepositoory,
+        userRepository: UserRepository,
         hashProvider: HashProvider,
       ) => {
         return new UpdatePasswordUseCase(userRepository, hashProvider)
@@ -76,7 +84,7 @@ import { DeleteUserUseCase } from '../application/usecases/deleteuser.usecase'
     },
     {
       provide: DeleteUserUseCase,
-      useFactory: (userRepository: UserRepositoory) => {
+      useFactory: (userRepository: UserRepository) => {
         return new DeleteUserUseCase(userRepository)
       },
       inject: ['UserRepository'],

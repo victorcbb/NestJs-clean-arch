@@ -10,7 +10,7 @@ export type UserFilter = { name?: string; email?: string }
 export class SearchParams extends DefaultSearchParams<UserFilter> {}
 export class SearchResult extends DefaultSearchResult<UserEntity, UserFilter> {}
 
-export interface UserRepositoory
+export interface UserRepository
   extends SearchableRepositoryInterface<
     UserEntity,
     UserFilter,
